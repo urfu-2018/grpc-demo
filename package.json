@@ -1,0 +1,29 @@
+{
+  "name": "grpc-demo",
+  "private": true,
+  "scripts": {
+    "start:server": "npm run build && cross-env NODE_PATH=build node build/server.js",
+    "start:client": "npm run build && cross-env NODE_PATH=build node build/client.js",
+    "build": "npm run build:proto && npm run build:ts",
+    "build:ts": "tsc --pretty",
+    "build:proto": "npm run proto:js && npm run proto:ts",
+    "proto:js": "protoc --plugin=protoc-gen-grpc=./node_modules/.bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs:src/protos --grpc_out=src/protos -I src/protos src/protos/*.proto",
+    "proto:ts": "protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=src/protos -I src/protos src/protos/*.proto",
+    "clean": "rimraf build src/protos/*_pb.*"
+  },
+  "dependencies": {
+    "google-protobuf": "3.7.1",
+    "grpc": "1.19.0",
+    "protobufjs": "6.8.8",
+    "underscore.string": "^3.3.5"
+  },
+  "devDependencies": {
+    "@types/google-protobuf": "3.2.7",
+    "@types/node": "11.12.1",
+    "cross-env": "5.2.0",
+    "grpc-tools": "1.7.2",
+    "grpc_tools_node_protoc_ts": "2.5.0",
+    "rimraf": "2.6.3",
+    "typescript": "3.3.4000"
+  }
+}

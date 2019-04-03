@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+service Chat {
+    rpc GetMessages (google.protobuf.Empty)
+        returns (GetMessagesReply);
+
+    rpc SendMessage (Message)
+        returns (google.protobuf.Empty);
+
+    rpc StreamMessages (google.protobuf.Empty)
+        returns (stream Message);
+}
+
+message GetMessagesReply {
+    repeated Message items = 1;
+}
+
+message Message {
+    string username = 1;
+    string text = 2;
+}
